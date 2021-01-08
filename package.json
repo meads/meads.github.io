@@ -1,0 +1,16 @@
+{
+  "name": "meads.github.io",
+  "version": "1.0.0",
+  "description": "personal website hosted via github",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "gulp browser-sync"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "gulp": "^4.0.0"
+  }
+}
