@@ -87,6 +87,14 @@ img {
     color: #FFFFFF;
 }
 
+#content ul { width: 100%; }
+#content ul li a {
+    font-size: 36px;
+    font-weight: bold;
+    text-decoration: underline;
+    color: #FFB800;
+}
+
 footer {
     grid-area: footer;
     background: #585858;
