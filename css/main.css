@@ -147,6 +147,7 @@ a i.fa.fa-github {
     }
     .lg-text { display: block; }
     .sm-text { display: none; }
+    #games { display: none; }
 }
 
 /* Phone styles */
@@ -168,6 +169,7 @@ a i.fa.fa-github {
 
     .lg-text { display: none; }
     .sm-text { display: block; }
+    #games { display: none; }
 
     nav ul { 
         float: none;
