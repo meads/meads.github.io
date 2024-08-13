@@ -12,12 +12,13 @@
     var fore = null
     var app = null
     var explodedCatsCount = 0
-    const bottom = 350
+    const bottom = window.innerHeight-25
     const maxExplodedCats = 10
+    const site = window.location.host
 
     function Eagle (app) {
         this.anim = null
-        this.appHeight = 384
+        this.appHeight = window.innerHeight,
         this.stepDistance = 10
         this.direction = {up:false, down:false,left:false,right:false}
         this.items = {}
@@ -72,7 +73,7 @@
 
         this.anim = new PIXI.extras.AnimatedSprite(frames)
         this.anim.x = app.screen.width / 2
-        this.anim.y = app.screen.height / 2
+        this.anim.y = app.screen.height * 0.25
         this.anim.anchor.set(0.5)
         this.anim.animationSpeed = 0.25
         this.anim.play()
@@ -128,7 +129,7 @@
 
         this.anim = new PIXI.extras.AnimatedSprite(frames)
         this.anim.x = app.view.width
-        this.anim.y = 335
+        this.anim.y = window.innerHeight - 35
         this.anim.anchor.set(0.5)
         this.anim.animationSpeed = 0.25
         this.anim.play()
@@ -244,11 +245,11 @@
         // Initialize the game sprites, set the `gameState` to `play` and start the 'gameLoop'
         app = new PIXI.Application({
             width: window.innerWidth, 
-            height: 384,                       
+            height: window.innerHeight,                       
             antialias: true, 
             transparent: false, 
             resolution: 1, 
-            backgroundColor: 0x1c1c1c
+            backgroundColor: 0x82b6ff
         })
 
         app.stage = new PIXI.Container()
@@ -262,27 +263,25 @@
         document.body.appendChild(app.view)
         
         var farTexture = PIXI.Texture.fromImage("resources/sky.png")
-        far = new PIXI.extras.TilingSprite(farTexture, window.innerWidth, 384)
+        far = new PIXI.extras.TilingSprite(farTexture, window.innerWidth, window.innerHeight)
         far.position.x = 0
-        far.position.y = 0
-        far.tilePosition.x = 0
-        far.tilePosition.y = 0
+        far.position.y = window.innerHeight - 394
+        far.height = 300
         gameScene.addChild(far)
         
         var midTexture = PIXI.Texture.fromImage("resources/forest.png")
-        mid = new PIXI.extras.TilingSprite(midTexture, window.innerWidth, 384)
+        mid = new PIXI.extras.TilingSprite(midTexture, window.innerWidth, window.innerHeight)
         mid.position.x = 0
-        mid.position.y = 128
-        mid.tilePosition.x = 0
-        mid.tilePosition.y = 0
+        mid.position.y = window.innerHeight - 268
+        mid.height = 300
         gameScene.addChild(mid)
 
         var foreTexture = PIXI.Texture.fromImage("resources/platform.png")
-        fore = new PIXI.extras.TilingSprite(foreTexture, window.innerWidth, 384)
+        fore = new PIXI.extras.TilingSprite(foreTexture, window.innerWidth, window.innerHeight)
         fore.position.x = 0
-        fore.position.y = 160
-        fore.tilePosition.x = 0
-        fore.tilePosition.y = 0
+        fore.position.y = window.innerHeight - 220
+        fore.height = 300
+
         gameScene.addChild(fore)
 
         gameControlsScene = new PIXI.Container()
@@ -303,11 +302,18 @@
             dropShadowDistance: 6,
         })
         
-        let message = new PIXI.Text("\nControls:\n\n\t[Arrow keys]\n\t[Space bar]\n\nClick anywhere to play!", messageStyle)
-        message.position.set(window.innerWidth/2-200, 0)
+        let gameInstructions = [
+            "\nControls:\n\n",
+                "\t[Arrow keys] = move the bird and collect cats.\n",
+                "\t[Space bar] = drop the collected cats.\n\n",
+            "Click anywhere to play!"]
+
+
+        let message = new PIXI.Text(gameInstructions.join(""), messageStyle)
+        message.position.set(window.innerWidth/3, 0)
         
         let clickArea = new PIXI.Graphics()
-        clickArea.beginFill(0x1c1c1c)
+        clickArea.beginFill(0x3c3c3c)
         clickArea.drawRect(0,0,window.innerWidth, window.innerHeight)
         clickArea.endFill()
         clickArea.interactive = true
@@ -359,6 +365,7 @@
         })
 
         // parallax scrollng layers
+        // this can be thought of, as the speed each layer moves at per frame
         far.tilePosition.x -= 0.128
         mid.tilePosition.x -= 0.64
         fore.tilePosition.x -= 2.64
@@ -380,16 +387,16 @@
           })
 
         let message = new PIXI.Text("Ok you have hurt enough cats!", messageStyle)
-        message.position.set(window.innerWidth/2-250, window.innerHeight/3)
+        message.position.set(window.innerWidth/3, window.innerHeight/3)
 
         let clickArea = new PIXI.Graphics()
-        clickArea.beginFill(0x1c1c1c)
+        clickArea.beginFill(0x3c3c3c)
         clickArea.drawRect(0,0,window.innerWidth, window.innerHeight)
         clickArea.endFill()
         clickArea.interactive = true
         clickArea.on("pointerdown", (e) => {
             gameOverScene.visible = false
-            window.location.href = window.location.href
+            window.location.href = "http://"+site
         })
         gameOverScene.addChild(clickArea)
         gameOverScene.addChild(message)
